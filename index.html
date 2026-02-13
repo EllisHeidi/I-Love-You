@@ -15,7 +15,8 @@
 
 body {
   background: linear-gradient(135deg, #3b0000, #8b0000);
-  overflow: hidden;
+  overflow-x: hidden; /* FIXED */
+  overflow-y: hidden;
   min-height: 100vh;
   color: white;
   position: relative;
@@ -23,10 +24,13 @@ body {
 
 /* Floating Hearts */
 .heart {
-  position: absolute;
+  position: fixed; /* changed from absolute */
+  top: 0;
   color: rgba(255, 100, 100, 0.4);
   font-size: 20px;
   animation: floatUp linear infinite;
+  pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes floatUp {
@@ -40,6 +44,8 @@ body {
   min-height: 100vh;
   padding: 40px;
   gap: 40px;
+  position: relative;
+  z-index: 2; /* content above hearts */
 }
 
 /* Letter Section */
@@ -113,7 +119,7 @@ body {
   border-radius: 10px;
 }
 
-/* Small spacing added here */
+/* Added spacing */
 .days {
   position: absolute;
   top: -60px;
@@ -155,6 +161,7 @@ body {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
+  z-index: 2;
 }
 
 /* MOBILE FIX */
@@ -232,7 +239,7 @@ function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
   heart.innerHTML = "❤";
-  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.left = Math.random() * window.innerWidth + "px"; /* FIXED */
   heart.style.fontSize = (15 + Math.random() * 20) + "px";
   heart.style.animationDuration = (5 + Math.random() * 5) + "s";
   document.body.appendChild(heart);
