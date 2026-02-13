@@ -16,11 +16,12 @@
 body {
   background: linear-gradient(135deg, #3b0000, #8b0000);
   overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
+  position: relative;
 }
 
-
+/* Floating Hearts */
 .heart {
   position: absolute;
   color: rgba(255, 100, 100, 0.4);
@@ -36,7 +37,7 @@ body {
 /* Main Layout */
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   padding: 40px;
   gap: 40px;
 }
@@ -99,6 +100,7 @@ body {
   position: relative;
   width: 200px;
   height: 300px;
+  margin-top: 40px;
 }
 
 .trunk {
@@ -109,6 +111,16 @@ body {
   height: 120px;
   background: #4d2600;
   border-radius: 10px;
+}
+
+/* Small spacing added here */
+.days {
+  position: absolute;
+  top: -60px;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .leaf {
@@ -135,29 +147,59 @@ body {
   50% { transform: translateY(-10px); }
 }
 
-.days {
+/* Styled Anniversary Date */
+.anniversary-date {
   position: absolute;
-  top: -40px;
+  bottom: 20px;
   width: 100%;
   text-align: center;
   font-size: 20px;
   font-weight: bold;
 }
 
+/* MOBILE FIX */
 @media(max-width: 900px){
+
+  body {
+    overflow-y: auto;
+  }
+
   .container {
     flex-direction: column;
-    overflow-y: auto;
+    padding: 20px;
+    gap: 60px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .letter-box {
+    padding: 25px;
+  }
+
+  .letter {
+    font-size: 16px;
+  }
+
+  .tree {
+    transform: scale(0.9);
+  }
+
+  .days {
+    font-size: 18px;
+  }
+
+  .anniversary-date {
+    position: relative;
+    margin-top: 40px;
+    font-size: 18px;
   }
 }
 </style>
 </head>
 <body>
 
-<!--  Background Music -->
 <audio id="bgMusic" loop>
 <source src="George Michael - Careless Whisper.mp3.mp3" type="audio/mpeg">
-
 </audio>
 
 <div class="container">
@@ -169,7 +211,7 @@ body {
   </div>
 
   <div class="tree-section">
-    <div class="tree" style="margin-top: 40px;">
+    <div class="tree">
       <div class="days" id="daysTogether"></div>
       <div class="trunk"></div>
       <div class="dino">🦕</div>
@@ -177,6 +219,10 @@ body {
     </div>
   </div>
 
+</div>
+
+<div class="anniversary-date">
+  26/01/2026 (11:58pm)
 </div>
 
 <script>
@@ -195,11 +241,12 @@ function createHeart() {
 setInterval(createHeart, 300);
 
 /* Relationship Days */
-const startDate = new Date("2026-01-26");
+const startDate = new Date("2026-01-26T23:58:00");
 const today = new Date();
 const diffTime = Math.abs(today - startDate);
 const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-document.getElementById("daysTogether").innerText = 
+
+document.getElementById("daysTogether").innerText =
   days + " Days Growing Together ❤️";
 
 /* Generate Leaves */
@@ -213,10 +260,8 @@ for (let i = 0; i < days && i < 150; i++) {
   tree.appendChild(leaf);
 }
 
-
-/* Letter Animation */
-const message = `
-My Dear Raphael,
+/* Letter */
+const message = `My Dear Raphael,
 
 There are so many things I want to say, yet no words ever feel big enough to truly express how I feel about you. But I'll try, because you deserve to hear it, to know it, to feel it every single day.
 
@@ -228,8 +273,7 @@ When I think about the future, it's you I see by my side. Your hand in mine, you
 
 Thank you for being you, for loving me, and for making this life so incredibly beautiful. I love you more than words can say, and I will keep loving you deeper and stronger every single day.
 
-Forever yours <3
-`;
+Forever yours <3`;
 
 function typeWriter(text, i) {
   if (i < text.length) {
@@ -240,7 +284,6 @@ function typeWriter(text, i) {
   }
 }
 
-/* Open Letter + Start Music with Fade In */
 function openLetter() {
   const letter = document.getElementById("letter");
   const music = document.getElementById("bgMusic");
@@ -266,6 +309,5 @@ document.getElementById("letter").addEventListener("click", function(){
 });
 
 </script>
-<p>26/01/2026 (11:58pm)</p>
 </body>
 </html>
